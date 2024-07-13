@@ -25,7 +25,7 @@ const MonthYearSelector = ({onMonthYearChange}) => {
             <InputLabel id="month-year-select-label">
                 {isLoading ? "Loading ..." : "Year - Month"}
             </InputLabel>
-            <Select
+            <Select disabled={isLoading}
                 labelId="month-year-select-label"
                 id="month-year-select"
                 value={selectedMonthYear}
