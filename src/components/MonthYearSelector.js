@@ -23,7 +23,7 @@ const MonthYearSelector = ({onMonthYearChange}) => {
     return (
         <FormControl fullWidth>
             <InputLabel id="month-year-select-label">
-                {isLoading ? "Loading ..." : "Year - Month"}
+                {isLoading ? "Loading ..." : (selectedMonthYear ? "Month/Year" : "Select month and year")}
             </InputLabel>
             <Select disabled={isLoading}
                 labelId="month-year-select-label"
@@ -33,15 +33,15 @@ const MonthYearSelector = ({onMonthYearChange}) => {
                 onChange={handleChange}
                 renderValue={(selected) => {
                     if (selected.length === 0) {
-                        return <em>Select year-month</em>;
+                        return <em>Select month and year</em>;
                     }
 
-                    return selected;
+                    return selected.split('-').reverse().join('/');
                 }}
             >
                 {!isLoading && Array.isArray(monthYearItems) && monthYearItems.map((item) => (
                     <MenuItem key={item.month_year} value={item.month_year} disabled={!item.has_data}>
-                        {item.month_year}
+                        {item.month_year.split('-').reverse().join('/')}
                     </MenuItem>
                 ))}
             </Select>
