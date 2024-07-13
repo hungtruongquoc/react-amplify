@@ -12,6 +12,22 @@ const api = {
         const response = await axiosInstance.get('/room-utilization');
         return response.data;
     },
+    getHotels: async () => {
+        const response = await axiosInstance.get('/hotels');
+        return response.data;
+    },
+    getMonthlyAverageAllHotels: async () => {
+        const response = await axiosInstance.get('/room-utilization/average-per-month/');
+        return response.data;
+    },
+    getDailyMaxUtilizationForEachMonth: async(month) => {
+        const response = await axiosInstance.get(`/room-utilization/max-daily-by-hotels/${month}`);
+        return response.data;
+    },
+    getMonthYearItems: async() => {
+        const response = await axiosInstance.get('/month-years');
+        return response.data;
+    }
 };
 
 export default api;
