@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { FormControl, InputLabel, MenuItem, Select, IconButton, InputAdornment } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import ClearIcon from '@mui/icons-material/Clear';
+import ClearIcon from '@mui/icons-material/Cancel';
 import api from '../api/data';
 
 const StyledInputAdornment = styled(InputAdornment)(({ theme }) => ({
@@ -13,12 +13,6 @@ const StyledInputAdornment = styled(InputAdornment)(({ theme }) => ({
 const MonthYearSelector = ({value, onMonthYearChange }) => {
     const { data: monthYearItems, isLoading, error } = useQuery('month-year', api.getMonthYearItems);
     const [selectedMonthYear, setSelectedMonthYear] = useState('');
-
-    // useEffect(() => {
-    //     if (onMonthYearChange) {
-    //         onMonthYearChange(selectedMonthYear);
-    //     }
-    // }, [selectedMonthYear, onMonthYearChange]);
 
     useEffect(() => {
         setSelectedMonthYear(value);

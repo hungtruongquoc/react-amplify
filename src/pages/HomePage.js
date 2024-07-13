@@ -1,6 +1,5 @@
 import {useQuery} from 'react-query';
 import api from '../api/data';
-import {Bar, BarChart, Legend, Line, Tooltip, XAxis, YAxis} from "recharts";
 import {useGetDailyMaxByMonth} from "../hooks/useGetDailyMaxByMonth";
 import {Skeleton} from "@mui/material";
 import {Box} from "@mui/system";
@@ -8,7 +7,7 @@ import MonthYearSelector from "../components/MonthYearSelector";
 import {useChartConfig} from "../hooks/useGetChartConfig";
 import {useEffect, useMemo, useState} from "react";
 import DynamicChart from "../components/DynamicChart";
-
+import { useUrlQuery } from '../hooks/useUrlQuery';
 
 export default function HomePage() {
     const {
@@ -18,7 +17,7 @@ export default function HomePage() {
         setSelectedMonth,
     } = useGetDailyMaxByMonth();
 
-    const [selectorValue, setSelectorValue] = useState('');
+    const [selectorValue, setSelectorValue] = useUrlQuery('monthYear', '');
 
     const {
         data: monthlyAverageAll,
@@ -65,6 +64,10 @@ export default function HomePage() {
             setData(monthlyAverageAll);
         }
     }, [selectedMonth, dailyMaxData, monthlyAverageAll]);
+
+    useEffect(() => {
+        setSelectedMonth(selectorValue);
+    }, [selectorValue, setSelectedMonth]);
 
     return (
         <div className="container max-auto">
