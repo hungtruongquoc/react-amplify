@@ -33,7 +33,12 @@ export default function HomePage() {
 
     const onMonthYearChanged = (monthYear) => {
         setSelectedMonth(monthYear);
-        setChartConfig(CHART_TYPES.DAILY_MAX, barClickEvents);
+        if (monthYear) {
+            setChartConfig(CHART_TYPES.DAILY_MAX, barClickEvents);
+        }
+        else {
+            setChartConfig(CHART_TYPES.AVERAGE_MONTHLY, barClickEvents);
+        }
     }
 
     const barClickEvents = useMemo(() => ({
