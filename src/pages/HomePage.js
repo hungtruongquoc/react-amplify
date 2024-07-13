@@ -62,23 +62,8 @@ export default function HomePage() {
             <Box sx={{minWidth: 120}} className="py-10">
                 <MonthYearSelector onMonthYearChange={onMonthYearChanged}/>
             </Box>
-            {isLoadingData ? (<Skeleton variant="rectangular" width={1300} height={730} animation="wave"/>) :
-                (
-
-                    // <BarChart width={config.width} height={config.height} data={config.data}>
-                    //     <XAxis dataKey={config.dataKey} tickCount={config?.xAxis?.tickCount}/>
-                    //     <YAxis tickCount={config?.yAxis?.tickCount}/>
-                    //     <Tooltip/>
-                    //     <Legend/>
-                    //     {config.bars && config.bars.map(item => (
-                    //         <Bar key={item.dataKey} dataKey={item?.dataKey} fill={item.fill}
-                    //              onClick={item.onClick}/>))}
-                    //     {config.lines && config.lines.map(item => (
-                    //         <Line key={item.dataKey} dataKey={item?.dataKey} stroke={item.stroke}
-                    //              onClick={item.onClick} type="monotone"/>))}
-                    // </BarChart>
-                    <DynamicChart config={config}/>
-                )
+            {isLoadingData ? <Skeleton variant="rectangular" width={1300} height={730} animation="wave"/> :
+                <DynamicChart config={config}/>
             }
         </div>
     )
