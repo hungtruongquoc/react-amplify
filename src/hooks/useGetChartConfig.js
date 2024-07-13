@@ -12,8 +12,9 @@ export const useChartConfig = () => {
     });
     const [data, setData] = useState([])
 
-    const chartTypeMap = {
+    const chartTypeMap = useMemo(() => ({
         [CHART_TYPES.AVERAGE_MONTHLY]: {
+            type: 'bar',
             dataKey: 'month',
             width: 1200,
             height: 730,
@@ -27,35 +28,40 @@ export const useChartConfig = () => {
             ]
         },
         [CHART_TYPES.DAILY_MAX]: {
+            type: 'line',
             dataKey: 'day',
             width: 1300,
             height: 730,
             barGap: 16,
             xAxis: {tickCount: 30},
             yAxis: {tickCount: 5},
-            bars: [
+            lines: [
                 {
                     dataKey: "Hotel One_max_utilization",
-                    fill: "green"
+                    stroke: "green"
                 },
                 {
                     dataKey: "Hotel Two_max_utilization",
-                    fill: "blue"
+                    stroke: "blue"
                 },
                 {
                     dataKey: "Hotel Three_max_utilization",
-                    fill: "black"
+                    stroke: "black"
                 },
             ]
         }
-    };
+    }), []);
 
     const config = useMemo(() => {
         const chartConfig = { ...chartTypeMap[chartState.type], data };
 
-        chartConfig.bars = chartConfig.bars.map(bar => ({
+        chartConfig.bars = chartConfig.bars?.map(bar => ({
             ...bar,
             onClick: chartState.events && chartState.events[bar.dataKey]  ? chartState.events[bar.dataKey] : null
+        }));
+        chartConfig.lines = chartConfig.lines?.map(line => ({
+            ...line,
+            onClick: chartState.events && chartState.events[line.dataKey]  ? chartState.events[line.dataKey] : null
         }));
         return chartConfig;
     }, [chartState, data, chartTypeMap]);
