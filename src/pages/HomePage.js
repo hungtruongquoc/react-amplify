@@ -6,7 +6,7 @@ import {Skeleton} from "@mui/material";
 import {Box} from "@mui/system";
 import MonthYearSelector from "../components/MonthYearSelector";
 import {useChartConfig} from "../hooks/useGetChartConfig";
-import {useEffect, useMemo} from "react";
+import {useEffect, useMemo, useState} from "react";
 import DynamicChart from "../components/DynamicChart";
 
 
@@ -18,6 +18,8 @@ export default function HomePage() {
         setSelectedMonth,
     } = useGetDailyMaxByMonth();
 
+    const [selectorValue, setSelectorValue] = useState('');
+
     const {
         data: monthlyAverageAll,
         isLoading: monthlyAverageAllLoading
@@ -28,11 +30,13 @@ export default function HomePage() {
     const onBarClick = (data) => {
         // Gets utilization data for the month of all hotels
         setSelectedMonth(data.month);
+        setSelectorValue(data.month);
         setChartConfig(CHART_TYPES.DAILY_MAX, barClickEvents);
     }
 
     const onMonthYearChanged = (monthYear) => {
         setSelectedMonth(monthYear);
+        setSelectorValue(monthYear);
         if (monthYear) {
             setChartConfig(CHART_TYPES.DAILY_MAX, barClickEvents);
         }
@@ -65,7 +69,7 @@ export default function HomePage() {
     return (
         <div className="container max-auto">
             <Box sx={{minWidth: 120}} className="py-10">
-                <MonthYearSelector onMonthYearChange={onMonthYearChanged}/>
+                <MonthYearSelector value={selectorValue} onMonthYearChange={onMonthYearChanged}/>
             </Box>
             {isLoadingData ? <Skeleton variant="rectangular" width={1300} height={730} animation="wave"/> :
                 <DynamicChart config={config}/>

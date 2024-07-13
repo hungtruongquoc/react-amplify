@@ -10,18 +10,23 @@ const StyledInputAdornment = styled(InputAdornment)(({ theme }) => ({
     marginRight: theme.spacing(2), // Adjust this value to move the icon more or less to the left
 }));
 
-const MonthYearSelector = ({ onMonthYearChange }) => {
+const MonthYearSelector = ({value, onMonthYearChange }) => {
     const { data: monthYearItems, isLoading, error } = useQuery('month-year', api.getMonthYearItems);
     const [selectedMonthYear, setSelectedMonthYear] = useState('');
 
+    // useEffect(() => {
+    //     if (onMonthYearChange) {
+    //         onMonthYearChange(selectedMonthYear);
+    //     }
+    // }, [selectedMonthYear, onMonthYearChange]);
+
     useEffect(() => {
-        if (onMonthYearChange) {
-            onMonthYearChange(selectedMonthYear);
-        }
-    }, [selectedMonthYear, onMonthYearChange]);
+        setSelectedMonthYear(value);
+    }, [value]);
 
     const handleChange = (event) => {
         setSelectedMonthYear(event.target.value);
+        onMonthYearChange(event.target.value);
     };
 
     if (error) return <div>Error loading month-year items</div>;
@@ -50,8 +55,8 @@ const MonthYearSelector = ({ onMonthYearChange }) => {
                             <IconButton
                                 aria-label="clear selection"
                                 onClick={() => {
-                                    setSelectedMonthYear(null);
-                                    onMonthYearChange(null);
+                                    setSelectedMonthYear('');
+                                    onMonthYearChange('');
                                 }}
                                 edge="end"
                             >
