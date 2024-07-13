@@ -7,7 +7,7 @@ const DynamicChart = ({ config }) => {
     return (
         <ChartComponent width={config.width} height={config.height} data={config.data}>
             <XAxis dataKey={config.dataKey} tickCount={config?.xAxis?.tickCount} />
-            <YAxis tickCount={config?.yAxis?.tickCount} />
+            <YAxis tickCount={config?.yAxis?.tickCount} tickFormatter={(tick) => `${(tick * 100).toFixed(0)}%`} />
             <Tooltip />
             <Legend />
             {elements && elements.map(item => {
