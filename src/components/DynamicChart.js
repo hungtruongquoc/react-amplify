@@ -7,7 +7,7 @@ const DynamicChart = ({config}) => {
     const dimensions = useResponsiveDimensions();
 
     return (
-        <div className="w-full overflow-hidden">
+        <div className="w-full overflow-auto flex justify-center items-center">
             <ChartComponent width={dimensions.width} height={dimensions.height} data={config.data}>
                 <XAxis dataKey={config.dataKey} tickCount={config?.xAxis?.tickCount}/>
                 <YAxis tickCount={config?.yAxis?.tickCount} tickFormatter={(tick) => `${(tick * 100).toFixed(0)}%`}/>
